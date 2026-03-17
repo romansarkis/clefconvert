@@ -1,8 +1,10 @@
-# Sheet Music Clef Converter — Project Context
+# Sheet Music Clef Converter — Project Context 
 
 ## Overview
 
-This project is a full-stack web application that allows users to upload images of sheet music and convert them between clefs (primarily treble ↔ bass). The long-term goal is to process sheet music images, extract musical information, transform it, and output editable sheet music formats.
+This project is a full-stack web application that allows users to upload sheet music and convert it between clefs (primarily treble ↔ bass).
+
+The system now includes Optical Music Recognition (OMR) to extract structured musical data from uploaded files.
 
 ---
 
@@ -10,12 +12,11 @@ This project is a full-stack web application that allows users to upload images 
 
 The application should:
 
-* Accept uploaded sheet music images (full pages or cropped sections)
-* Detect musical structure from the image (clef, notes, key signature, rhythm)
-* Convert music between clefs (e.g., treble → bass)
-* Output editable sheet music (MusicXML preferred)
-* Allow export to formats such as PDF or MusicXML
-* Potentially be monetized (e.g., ads or premium features)
+* Accept uploaded sheet music (images or PDFs)
+* Extract musical structure (notes, clef, rhythm)
+* Convert music between clefs (with potentially an in-app editor to correct for errors)
+* Output downloadable sheet music (PDF preferred)
+* Optionally expose intermediate formats (MusicXML)
 
 ---
 
@@ -26,130 +27,118 @@ The application should:
 * Framework: Next.js (App Router)
 * Language: TypeScript
 * Styling: Tailwind CSS
-* Features implemented:
+* Features:
 
-  * Image upload UI
+  * File upload (images + PDFs)
   * Image preview
   * Convert button with loading state
 
+---
+
 ### Backend
 
-* Implemented using Next.js API routes
-* Endpoint: `POST /api/convert`
-* Capabilities:
+* Next.js API route: `POST /api/convert`
 
-  * Accepts file uploads via `FormData`
-  * Converts uploaded file into a buffer
-  * Saves file locally to `/frontend/uploads/`
-  * Returns JSON response to frontend
+### Current Pipeline
 
-### Data Flow (Current)
-
-Browser → Next.js API route → File saved to disk → Response returned
+Browser  
+→ Upload file  
+→ API receives file  
+→ File saved to `/uploads/`  
+→ Audiveris CLI runs (OMR)  
+→ Outputs `.mxl` (MusicXML)  
+→ Response returned  
 
 ---
 
 ## Completed Functionality
 
-* Project repository initialized
-* Next.js frontend scaffolded and running
-* Clean homepage UI
-* Image upload and preview working
-* Convert button implemented
-* Frontend connected to backend API
-* Backend successfully receives uploaded files
-* Files are saved locally on the server
+* Full-stack file upload system
+* Backend file storage
+* Audiveris OMR integration
+* Automatic processing of uploaded files
+* MusicXML (.mxl) generation from PDFs/images
+* Verified compatibility with MuseScore
+
+---
+
+## Current Output
+
+* `.mxl` (MusicXML, compressed) ✅
+* `.omr` (Audiveris internal file)
+* log/debug files
+
+---
+
+## Current Limitations
+
+* OMR output is imperfect (expected)
+* No frontend download mechanism yet
+* No clef conversion logic yet
+* No PDF rendering of converted music
+* Screenshot inputs not yet optimized
 
 ---
 
 ## Current Task
 
-Research and integrate an Optical Music Recognition (OMR) system.
+Improve user experience and begin transformation pipeline.
 
 ---
 
 ## What is Needed Next
 
-The application currently stops at saving uploaded images. The next phase is to extract musical data from these images.
+### Immediate Next Steps
 
-### Immediate Goals
-
-1. Select an OMR tool/library
-2. Run OMR manually on saved images to understand output format
-3. Integrate OMR into backend pipeline
-4. Parse OMR output into a structured format (e.g., JSON or MusicXML)
-5. Prepare for clef transformation logic
+1. Add download support for `.mxl` file
+2. Serve generated files via API (not local file paths)
+3. Allow frontend to trigger file download
 
 ---
 
-## OMR Requirements
+### Next Phase (Core Feature)
 
-The OMR system must be able to:
-
-* Detect staff lines and clefs
-* Identify notes and pitches
-* Extract rhythm/duration
-* Output structured data (preferably MusicXML)
+4. Parse MusicXML
+5. Implement clef conversion logic
+6. Generate transformed MusicXML
+7. Render/export to PDF
 
 ---
 
-## Potential OMR Tools (to evaluate)
+### Future Enhancements
 
-* Audiveris (open-source, Java-based, outputs MusicXML)
-* OpenOMR (older, less maintained)
-* Commercial APIs (if needed later)
+* Image preprocessing for screenshots
+* AI-assisted correction of OMR errors
+* In-browser sheet music preview/editor
+* Support for MIDI export
 
 ---
 
 ## Key Technical Challenges
 
-* Image recognition accuracy (OMR is inherently imperfect)
-* Parsing and interpreting OMR output
-* Mapping musical data for clef conversion
-* Rendering transformed music back into a visual format
-
----
-
-## Future Architecture (Planned)
-
-Browser
-→ Upload image
-→ Backend API
-→ OMR processing
-→ Structured music data (MusicXML/JSON)
-→ Clef conversion logic
-→ Render new sheet music
-→ Export/download
-
----
-
-## Important Notes
-
-* The current system successfully handles file upload and storage
-* OMR integration is the next critical milestone
-* Clef conversion logic depends entirely on structured musical data from OMR
+* OMR accuracy (inherent limitation)
+* Parsing and transforming MusicXML
+* Rendering sheet music back to PDF
+* Handling low-quality image inputs
 
 ---
 
 ## Dev Log
 
-Day 1:
+### Day 1–2:
+* Project setup
+* Upload + preview UI
+* Backend API for file upload
+* Local file storage
 
-* Repository created
-* Next.js app initialized
-* Development environment configured
-* Homepage UI cleaned
-
-Day 2:
-
-* Image upload and preview implemented
-* Convert button with loading state added
-* Backend API route created
-* File upload from frontend to backend working
-* Files successfully saved to local server
+### Day 3:
+* Integrated Audiveris OMR
+* Successfully processed PDFs into MusicXML
+* Verified output in MuseScore
+* Established full processing pipeline
 
 ---
 
 ## Summary
 
-The project has a working full-stack foundation. The next phase is integrating an OMR system to convert uploaded sheet music images into structured musical data, which will enable clef conversion and final output generation.
+The project now has a working OMR pipeline that converts uploaded sheet music into structured MusicXML. The next phase focuses on delivering usable output (downloads), implementing clef conversion, and improving accuracy and usability.
