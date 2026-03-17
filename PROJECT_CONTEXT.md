@@ -21,7 +21,7 @@ Build a web app that:
 
 ---
 
-## ✅ Completed
+## ✅ Completed (Updated)
 
 * [x] Repo created
 * [x] Local environment set up
@@ -29,6 +29,10 @@ Build a web app that:
 * [x] Next.js frontend created
 * [x] Dev server running
 * [x] Cleaned default homepage
+* [x] Image upload UI
+* [x] Image preview
+* [x] Convert button
+* [x] Loading state (mock backend)
 
 ---
 
@@ -53,9 +57,9 @@ None
 
 ## 📌 Next Steps
 
-1. Create upload button + file input
-2. Display uploaded image preview
-3. Prepare for backend API integration
+1. Connect convert button to backend API
+2. Choose OMR tool (Audiveris, etc.)
+3. Send image to backend for processing
 
 ---
 
