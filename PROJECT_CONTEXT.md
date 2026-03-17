@@ -1,73 +1,155 @@
-# 🎼 Sheet Music Clef Converter — Project Context
+# Sheet Music Clef Converter — Project Context
 
-## 🎯 Goal
+## Overview
 
-Build a web app that:
-
-* Accepts sheet music images (screenshots). Users can either upload sheet music screenshots line by line (if they wanted to only convert a certain section of an arrangement to its own song on another instrument, for example.) Or, they could just upload a screenshot of an entire song that happens to be in another key that they wanted to play, and the web app will be able to read the key signature, the key etc. (possibly using AI idk) and then the web app can convert that whole song in one go.
-* Converts treble clef → bass clef (or visa versa)
-* Outputs editable sheet music
-* Allows export (PDF / MusicXML)
-* Can potentially make me money through advertisements (since I will have to pay to host it online I assume) <= I (Roman) added this bullet point.
+This project is a full-stack web application that allows users to upload images of sheet music and convert them between clefs (primarily treble ↔ bass). The long-term goal is to process sheet music images, extract musical information, transform it, and output editable sheet music formats.
 
 ---
 
-## 🧱 Current Architecture
+## Core Goals
 
-* Frontend: Next.js (TypeScript, Tailwind, App Router)
-* Backend: Not started
-* OMR: Not chosen
-* Rendering: Not chosen
+The application should:
 
----
-
-## ✅ Completed (Updated)
-
-* [x] Repo created
-* [x] Local environment set up
-* [x] Project structure initialized
-* [x] Next.js frontend created
-* [x] Dev server running
-* [x] Cleaned default homepage
-* [x] Image upload UI
-* [x] Image preview
-* [x] Convert button
-* [x] Loading state (mock backend)
+* Accept uploaded sheet music images (full pages or cropped sections)
+* Detect musical structure from the image (clef, notes, key signature, rhythm)
+* Convert music between clefs (e.g., treble → bass)
+* Output editable sheet music (MusicXML preferred)
+* Allow export to formats such as PDF or MusicXML
+* Potentially be monetized (e.g., ads or premium features)
 
 ---
 
-## 🔄 Current Task
+## Current Architecture
 
-Build image upload UI (frontend)
+### Frontend
+
+* Framework: Next.js (App Router)
+* Language: TypeScript
+* Styling: Tailwind CSS
+* Features implemented:
+
+  * Image upload UI
+  * Image preview
+  * Convert button with loading state
+
+### Backend
+
+* Implemented using Next.js API routes
+* Endpoint: `POST /api/convert`
+* Capabilities:
+
+  * Accepts file uploads via `FormData`
+  * Converts uploaded file into a buffer
+  * Saves file locally to `/frontend/uploads/`
+  * Returns JSON response to frontend
+
+### Data Flow (Current)
+
+Browser → Next.js API route → File saved to disk → Response returned
 
 ---
 
-## 🚧 Current Problem
+## Completed Functionality
 
-None
-
----
-
-## 🧠 Key Decisions
-
-* Using Next.js for frontend
-* Using Tailwind for styling
-
----
-
-## 📌 Next Steps
-
-1. Connect convert button to backend API
-2. Choose OMR tool (Audiveris, etc.)
-3. Send image to backend for processing
+* Project repository initialized
+* Next.js frontend scaffolded and running
+* Clean homepage UI
+* Image upload and preview working
+* Convert button implemented
+* Frontend connected to backend API
+* Backend successfully receives uploaded files
+* Files are saved locally on the server
 
 ---
 
-## 📝 Dev Log
+## Current Task
+
+Research and integrate an Optical Music Recognition (OMR) system.
+
+---
+
+## What is Needed Next
+
+The application currently stops at saving uploaded images. The next phase is to extract musical data from these images.
+
+### Immediate Goals
+
+1. Select an OMR tool/library
+2. Run OMR manually on saved images to understand output format
+3. Integrate OMR into backend pipeline
+4. Parse OMR output into a structured format (e.g., JSON or MusicXML)
+5. Prepare for clef transformation logic
+
+---
+
+## OMR Requirements
+
+The OMR system must be able to:
+
+* Detect staff lines and clefs
+* Identify notes and pitches
+* Extract rhythm/duration
+* Output structured data (preferably MusicXML)
+
+---
+
+## Potential OMR Tools (to evaluate)
+
+* Audiveris (open-source, Java-based, outputs MusicXML)
+* OpenOMR (older, less maintained)
+* Commercial APIs (if needed later)
+
+---
+
+## Key Technical Challenges
+
+* Image recognition accuracy (OMR is inherently imperfect)
+* Parsing and interpreting OMR output
+* Mapping musical data for clef conversion
+* Rendering transformed music back into a visual format
+
+---
+
+## Future Architecture (Planned)
+
+Browser
+→ Upload image
+→ Backend API
+→ OMR processing
+→ Structured music data (MusicXML/JSON)
+→ Clef conversion logic
+→ Render new sheet music
+→ Export/download
+
+---
+
+## Important Notes
+
+* The current system successfully handles file upload and storage
+* OMR integration is the next critical milestone
+* Clef conversion logic depends entirely on structured musical data from OMR
+
+---
+
+## Dev Log
 
 Day 1:
 
-* Repo created
-* Project structure initialized
-* Next.js app created and running
-* Clean homepage implemented
+* Repository created
+* Next.js app initialized
+* Development environment configured
+* Homepage UI cleaned
+
+Day 2:
+
+* Image upload and preview implemented
+* Convert button with loading state added
+* Backend API route created
+* File upload from frontend to backend working
+* Files successfully saved to local server
+
+---
+
+## Summary
+
+The project has a working full-stack foundation. The next phase is integrating an OMR system to convert uploaded sheet music images into structured musical data, which will enable clef conversion and final output generation.

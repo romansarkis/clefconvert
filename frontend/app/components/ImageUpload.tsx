@@ -12,12 +12,23 @@ export default function ImageUpload() {
 
     setIsLoading(true);
 
-    // simulate backend call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+        const formData = new FormData();
+        formData.append("file", image);
+
+        const res = await fetch("/api/convert", {
+        method: "POST",
+        body: formData,
+        });
+
+        const data = await res.json();
+
+        alert(data.message);
+    } catch (err) {
+        alert("Error converting file");
+    }
 
     setIsLoading(false);
-
-    alert("Conversion complete (mock)");
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
