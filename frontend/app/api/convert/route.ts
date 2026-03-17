@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { exec } from "child_process";
 import fs from "fs";
 import path from "path";
 
@@ -23,13 +24,38 @@ export async function POST(req: NextRequest) {
 
     fs.writeFileSync(filePath, buffer);
 
-    return NextResponse.json({
-      message: "File saved successfully",
-      path: filePath,
+    // ===== RUN AUDIVERIS =====
+    const audiverisPath = `"C:\\Program Files\\Audiveris\\audiveris.exe"`;
+    const command = `${audiverisPath} -batch -export "${filePath}"`;
+
+    // wrap exec in a promise so we can await it
+    await new Promise((resolve, reject) => {
+      exec(command, (error, stdout, stderr) => {
+        if (error) {
+          console.error("OMR Error:", error);
+          reject(error);
+          return;
+        }
+
+        console.log("OMR Output:", stdout);
+        resolve(stdout);
+      });
     });
+
+    // ===== GET OUTPUT FILE =====
+    const outputPath = filePath.replace(/\.(png|jpg|jpeg|pdf)$/i, ".mxl");
+
+    // ===== RETURN RESULT =====
+    return NextResponse.json({
+      message: "OMR processing complete",
+      input: filePath,
+      output: outputPath,
+    });
+
   } catch (error) {
+    console.error("API Error:", error);
     return NextResponse.json(
-      { error: "Something went wrong" },
+      { error: "Something went wrong during OMR processing" },
       { status: 500 }
     );
   }

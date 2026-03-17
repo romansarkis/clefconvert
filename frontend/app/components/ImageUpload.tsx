@@ -47,7 +47,7 @@ export default function ImageUpload() {
         Upload Sheet Music
         <input
           type="file"
-          accept="image/*"
+          accept="image/*,.pdf"
           className="hidden"
           onChange={handleFileChange}
         />
