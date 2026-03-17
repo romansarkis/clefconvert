@@ -1,9 +1,13 @@
+import ImageUpload from "./components/ImageUpload";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <h1 className="text-3xl font-bold">
-        Sheet Music Clef Converter 🎼
+    <main className="min-h-screen flex flex-col items-center justify-center p-6">
+      <h1 className="text-3xl font-bold mb-6">
+        🎼 Sheet Music Clef Converter
       </h1>
+
+      <ImageUpload />
     </main>
   );
 }
